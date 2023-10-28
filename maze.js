@@ -1,8 +1,11 @@
 const canvas = document.getElementById('mazeCanvas');
 const ctx = canvas.getContext('2d');
-const cellSize = 40;
-const width = canvas.width / cellSize;
-const height = canvas.height / cellSize;
+let cellSize = 40;
+let width = canvas.width / cellSize;
+let height = canvas.height / cellSize;
+
+const difficultySelect = document.getElementById('difficulty');
+
 
 class Cell {
     constructor(x, y) {
@@ -116,7 +119,7 @@ let maze = buildMaze();
 
 let solvedMazes = 0;
 let timer;
-let timeRemaining = 15 * 60; // 30 minutes in seconds
+let timeRemaining = 1 * 60;
 
 function startTimer() {
     timer = setInterval(function () {
@@ -136,17 +139,11 @@ function formatTime(seconds) {
 }
 
 function drawTimer() {
-    ctx.font = '20px Arial';
-    ctx.fillStyle = 'white';
-    ctx.textAlign = 'right';
-    ctx.fillText(`Time: ${formatTime(timeRemaining)}`, canvas.width - 10, canvas.height - 10);
+    document.getElementById('timer').textContent = `Time: ${formatTime(timeRemaining)}`;
 }
 
 function drawSolvedMazes() {
-    ctx.font = '20px Arial';
-    ctx.fillStyle = 'white';
-    ctx.textAlign = 'left';
-    ctx.fillText(`Mazes Solved: ${solvedMazes}`, 10, canvas.height - 10);
+    document.getElementById('mazes-solved').textContent = `Mazes Solved: ${solvedMazes}`;
 }
 
 function resetMaze() {
@@ -173,10 +170,11 @@ function drawEnd() {
     ctx.fillRect((width - 1) * cellSize + cellSize / 4, (height - 1) * cellSize + cellSize / 4, cellSize / 2, cellSize / 2);
 }
 
+
 function checkWinCondition() {
     if (playerPosition.x === width - 1 && playerPosition.y === height - 1) {
         solvedMazes++;
-        playerPosition = { x: 0, y: 0 }; // Reset player position to top left
+        playerPosition = { x: 0, y: 0 };
         resetMaze();
     }
 }
@@ -201,6 +199,14 @@ document.addEventListener('keydown', (e) => {
     if (e.key === 'ArrowRight') movePlayer('right');
     if (e.key === 'ArrowDown') movePlayer('down');
     if (e.key === 'ArrowLeft') movePlayer('left');
+});
+
+difficultySelect.addEventListener('change', function() {
+    cellSize = parseInt(difficultySelect.value, 10);
+    width = canvas.width / cellSize;
+    height = canvas.height / cellSize;
+    resetMaze();
+    drawMaze();
 });
 
 function gameLoop() {

@@ -3,11 +3,34 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Maze Generator</title>
-    <link rel="stylesheet" href="styles.css">
+    <title>Maze Game</title>
+    <style>
+        #gameContainer {
+            width: 800px;
+            margin: 0 auto;
+            text-align: center;
+        }
+        #gameInfo {
+            margin-top: 20px;
+        }
+    </style>
 </head>
 <body>
+
+<div id="gameContainer">
     <canvas id="mazeCanvas" width="800" height="800"></canvas>
-    <script src="maze.js"></script>
+    <div id="gameInfo">
+        <span id="timer"></span>
+        <span id="mazes-solved"></span>
+        <label for="difficulty">Maze Difficulty:</label>
+        <select id="difficulty">
+            <option value="40">Hard</option>
+            <option value="80">Easy</option>
+        </select>
+    </div>
+</div>
+
+<script src="maze.js"></script>
+
 </body>
 </html>
