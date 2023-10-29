@@ -119,7 +119,7 @@ let maze = buildMaze();
 
 let solvedMazes = 0;
 let timer;
-let timeRemaining = 1 * 60;
+let timeRemaining = 15 * 60;
 
 function startTimer() {
     timer = setInterval(function () {
